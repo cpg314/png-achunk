@@ -1,0 +1,13 @@
+[package]
+name = "c"
+version = "0.1.0"
+edition = "2021"
+
+[lib]
+name = "png_achunk_c"
+crate-type = ["staticlib"]
+
+[dependencies]
+pyo3 = { version = "0.20.0", features = ["extension-module"] }
+png-achunk = { path = "../" }
+libc = "0.2.150"

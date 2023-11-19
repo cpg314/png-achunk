@@ -1,0 +1,8 @@
+max_width = 100
+attr_fn_like_width = 90
+reorder_imports = true
+edition = "2021"
+# FIXME: Enable the following once they're stable.
+# wrap_comments = true
+# comment_width = 80
+# format_strings = true
