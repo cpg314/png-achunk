@@ -8,6 +8,5 @@ name = "png_achunk_c"
 crate-type = ["staticlib"]
 
 [dependencies]
-pyo3 = { version = "0.20.0", features = ["extension-module"] }
 png-achunk = { path = "../" }
 libc = "0.2.150"

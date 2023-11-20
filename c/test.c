@@ -1,9 +1,7 @@
 #include <math.h>
 #include <stdio.h>
 
-void read_chunk(const char *filename, const char *name, char **bytes,
-                size_t *length);
-void free_chunk(char *bytes, size_t length);
+#include "png_achunk.h"
 
 int main() {
   char *bytes;
