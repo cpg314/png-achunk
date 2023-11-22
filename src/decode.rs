@@ -37,6 +37,8 @@ impl Decoder<BufReader<std::fs::File>> {
         let reader = std::io::BufReader::new(reader);
         Ok(Self::from_reader(reader))
     }
+}
+impl<R: Read + Seek> Decoder<R> {
     /// Decode the non-critical chunks only, without reading the full image if they are placed before
     /// the IDAT section.
     pub fn decode_ancillary_chunks(&mut self) -> Result<Vec<Chunk>, DecodingError> {
