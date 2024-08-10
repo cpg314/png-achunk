@@ -2,6 +2,7 @@
 name = "c"
 version = "0.1.0"
 edition = "2021"
+publish = false
 
 [lib]
 name = "png_achunk_c"
