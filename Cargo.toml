@@ -3,6 +3,9 @@ name = "png-achunk"
 version = "0.1.0"
 edition = "2021"
 license = "MIT OR Apache-2.0"
+repository = "https://github.com/cpg314/png-achunk"
+category = ["multimedia::images"]
+description = "Encode and decode custom binary chunks in PNG images "
 
 [dependencies]
 ascii = "1.1.0"
