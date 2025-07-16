@@ -37,6 +37,7 @@ impl Encoder<std::io::BufWriter<std::fs::File>> {
         let output = std::fs::OpenOptions::new()
             .write(true)
             .create(true)
+            .truncate(true)
             .open(output)?;
         let output = std::io::BufWriter::new(output);
         Ok(Self::new(output))
@@ -57,22 +58,24 @@ impl<W: Write> image::ImageEncoder for Encoder<W> {
         buf: &[u8],
         width: u32,
         height: u32,
-        color_type: image::ColorType,
+        color_type: image::ExtendedColorType,
     ) -> image::ImageResult<()> {
         let (ct, bits) = match color_type {
-            image::ColorType::L8 => (png::ColorType::Grayscale, png::BitDepth::Eight),
-            image::ColorType::L16 => (png::ColorType::Grayscale, png::BitDepth::Sixteen),
-            image::ColorType::La8 => (png::ColorType::GrayscaleAlpha, png::BitDepth::Eight),
-            image::ColorType::La16 => (png::ColorType::GrayscaleAlpha, png::BitDepth::Sixteen),
-            image::ColorType::Rgb8 => (png::ColorType::Rgb, png::BitDepth::Eight),
-            image::ColorType::Rgb16 => (png::ColorType::Rgb, png::BitDepth::Sixteen),
-            image::ColorType::Rgba8 => (png::ColorType::Rgba, png::BitDepth::Eight),
-            image::ColorType::Rgba16 => (png::ColorType::Rgba, png::BitDepth::Sixteen),
+            image::ExtendedColorType::L8 => (png::ColorType::Grayscale, png::BitDepth::Eight),
+            image::ExtendedColorType::L16 => (png::ColorType::Grayscale, png::BitDepth::Sixteen),
+            image::ExtendedColorType::La8 => (png::ColorType::GrayscaleAlpha, png::BitDepth::Eight),
+            image::ExtendedColorType::La16 => {
+                (png::ColorType::GrayscaleAlpha, png::BitDepth::Sixteen)
+            }
+            image::ExtendedColorType::Rgb8 => (png::ColorType::Rgb, png::BitDepth::Eight),
+            image::ExtendedColorType::Rgb16 => (png::ColorType::Rgb, png::BitDepth::Sixteen),
+            image::ExtendedColorType::Rgba8 => (png::ColorType::Rgba, png::BitDepth::Eight),
+            image::ExtendedColorType::Rgba16 => (png::ColorType::Rgba, png::BitDepth::Sixteen),
             _ => {
                 return Err(image::ImageError::Unsupported(
                     image::error::UnsupportedError::from_format_and_kind(
                         image::ImageFormat::Png.into(),
-                        image::error::UnsupportedErrorKind::Color(color_type.into()),
+                        image::error::UnsupportedErrorKind::Color(color_type),
                     ),
                 ))
             }

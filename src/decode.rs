@@ -1,4 +1,4 @@
-use std::io::{BufReader, Read, Seek};
+use std::io::{BufRead, BufReader, Seek};
 use std::path::Path;
 
 use crate::chunk::{self, Chunk};
@@ -22,10 +22,10 @@ pub enum DecodingError {
 }
 
 /// PNG decoding, including ancillary chunks.
-pub struct Decoder<R: Read + Seek> {
+pub struct Decoder<R: BufRead + Seek> {
     reader: R,
 }
-impl<R: Read + Seek> Decoder<R> {
+impl<R: BufRead + Seek> Decoder<R> {
     pub fn from_reader(reader: R) -> Self {
         Self { reader }
     }
@@ -38,7 +38,7 @@ impl Decoder<BufReader<std::fs::File>> {
         Ok(Self::from_reader(reader))
     }
 }
-impl<R: Read + Seek> Decoder<R> {
+impl<R: BufRead + Seek> Decoder<R> {
     /// Decode the non-critical chunks only, without reading the full image if they are placed before
     /// the IDAT section.
     pub fn decode_ancillary_chunks(&mut self) -> Result<Vec<Chunk>, DecodingError> {
