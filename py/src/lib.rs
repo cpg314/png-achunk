@@ -1,4 +1,4 @@
-use std::io::{Cursor, Read, Seek};
+use std::io::{BufRead, Cursor, Seek};
 use std::path::PathBuf;
 
 use pyo3::{exceptions::PyRuntimeError, prelude::*, types::PyBytes, types::PyString};
@@ -26,7 +26,7 @@ fn read_chunk<'a>(
     read_chunk_from_decoder(py, decoder, name)
 }
 
-fn read_chunk_from_decoder<'a, R: Read + Seek>(
+fn read_chunk_from_decoder<'a, R: BufRead + Seek>(
     py: Python<'a>,
     mut decoder: png_achunk::Decoder<R>,
     name: &'a PyString,
