@@ -50,7 +50,7 @@ Only a primitive interface is implemented at the moment.
 
 The example in `c/test.c` can be compiled with
 
-```
+```bash
 $ gcc test.c -L. -l:libpng_achunk.a -lm -o test
 ```
 
