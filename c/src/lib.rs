@@ -12,7 +12,7 @@ fn read_chunk_impl(
 }
 
 #[no_mangle]
-pub unsafe extern "C" fn read_chunk(
+unsafe extern "C" fn read_chunk(
     filename: *const std::ffi::c_char,
     name: *const std::ffi::c_char,
     ptr: *mut *mut u8,
@@ -37,7 +37,7 @@ pub unsafe extern "C" fn read_chunk(
 }
 
 #[no_mangle]
-pub unsafe extern "C" fn free_chunk(ptr: *mut u8, len: *const libc::size_t) {
+unsafe extern "C" fn free_chunk(ptr: *mut u8, len: *const libc::size_t) {
     let len = len as usize;
     drop(Vec::<u8>::from_raw_parts(ptr, len, len));
 }
